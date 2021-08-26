@@ -248,9 +248,10 @@ void expression()
     }
 }
 
+/* reconhece operador aditivo */
 int isAddOp(char c)
 {
-        return (c == '+' || c == '-');
+    return (c == '+' || c == '-');
 }
 
 /* analisa e traduz um identificador */

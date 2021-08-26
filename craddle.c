@@ -25,6 +25,7 @@ void match(char c);
 char getName();
 char getNum();
 void emit(char *fmt, ...);
+int isAddOp(char c);
 
 /* PROGRAMA PRINCIPAL */
 int main()
@@ -138,4 +139,10 @@ void emit(char *fmt, ...)
     va_end(args);
 
     putchar('\n');
+}
+
+/* reconhece operador aditivo */
+int isAddOp(char c)
+{
+    return (c == '+' || c == '-');
 }

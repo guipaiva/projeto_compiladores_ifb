@@ -1,11 +1,11 @@
 /*
-The Cradle - O Ber√ßo
+The Cradle - O BerÁo
 
-O c√≥digo abaixo foi escrito por Felipo Soranz e √© uma adapta√ß√£o
-do c√≥digo original em Pascal escrito por Jack W. Crenshaw em sua
-s√©rie "Let's Build a Compiler".
+O cÛdigo abaixo foi escrito por Felipo Soranz e È uma adaptaÁ„o
+do cÛdigo original em Pascal escrito por Jack W. Crenshaw em sua
+sÈrie "Let's Build a Compiler".
 
-Este c√≥digo √© de livre distribui√ß√£o e uso.
+Este cÛdigo È de livre distribuiÁ„o e uso.
 */
 
 #include <stdio.h>
@@ -15,7 +15,7 @@ Este c√≥digo √© de livre distribui√ß√£o e uso.
 
 char look; /* O caracter lido "antecipadamente" (lookahead) */
 
-/* prot√≥tipos */
+/* protÛtipos */
 void init();
 void nextChar();
 void error(char *fmt, ...);
@@ -25,32 +25,22 @@ void match(char c);
 char getName();
 char getNum();
 void emit(char *fmt, ...);
-void term();
-void expression();
-void add();
-void subtract();
-void factor();
-int isAddOp(char c);
-void ident();
-void assignment();
 
 /* PROGRAMA PRINCIPAL */
 int main()
 {
     init();
-    assignment();
-    if (look != '\n')
-        expected("NewLine");
-    return 0;   
+
+    return 0;
 }
 
-/* inicializa√ß√£o do compilador */
+/* inicializaÁ„o do compilador */
 void init()
 {
     nextChar();
 }
 
-/* l√™ pr√≥ximo caracter da entrada */
+/* lÍ prÛximo caracter da entrada */
 void nextChar()
 {
     look = getchar();
@@ -123,7 +113,7 @@ char getName()
     return name;
 }
 
-/* recebe um n√∫mero inteiro */
+/* recebe um n˙mero inteiro */
 char getNum()
 {
     char num;
@@ -136,7 +126,7 @@ char getNum()
     return num;
 }
 
-/* emite uma instru√ß√£o seguida por uma nova linha */
+/* emite uma instruÁ„o seguida por uma nova linha */
 void emit(char *fmt, ...)
 {
     va_list args;
@@ -148,131 +138,4 @@ void emit(char *fmt, ...)
     va_end(args);
 
     putchar('\n');
-}
-
-
-
-/* analisa e traduz um fator matem√°tico */
-void factor()
-{
-    if (look == '('){
-        match('(');
-        expression();
-        match(')');
-    } else if(isalpha(look))
-        ident();
-    else
-        emit("MOV AX, %c", getNum());
-}
-
-/* reconhece e traduz uma multiplica√ß√£o */
-void multiply()
-{
-    match('*');
-    factor();
-    emit("POP BX");
-    emit("IMUL BX");
-}
-
-/* reconhece e traduz uma divis√£o */
-void divide()
-{
-    match('/');
-    factor();
-    emit("POP BX");
-    emit("XCHG AX, BX");
-    emit("CWD");
-    emit("IDIV BX");
-}
-
-/* analisa e traduz um termo */
-void term()
-{
-    factor();
-    while (look == '*' || look == '/') {
-        emit("PUSH AX");
-        switch(look) {
-          case '*':
-                multiply();
-                break;
-          case '/':
-                divide();
-                break;
-          default:
-                //expected("MulOp");
-                break;
-        }
-    }
-}
-
-
-/* reconhece e traduz uma adi√ß√£o */
-void add()
-{
-    match('+');
-    term();
-    emit("POP BX");
-    emit("ADD AX, BX");
-}
-
-/* reconhece e traduz uma subtra√ß√£o */
-void subtract()
-{
-    match('-');
-    term();
-    emit("POP BX");
-    emit("SUB AX, BX");
-    emit("NEG AX");
-}
-
-/* reconhece e traduz uma express√£o */
-void expression()
-{   
-    if(isAddOp(look))
-        emit("XOR AX, AX");
-    else
-        term();
-    while(look == '+' || look == '-'){
-        emit("PUSH AX");
-        switch(look) {
-          case '+':
-                add();
-                break;
-          case '-':
-                subtract();
-                break;
-          default:
-                //expected("AddOp");
-                break;
-        }
-    }
-}
-
-int isAddOp(char c)
-{
-        return (c == '+' || c == '-');
-}
-
-/* analisa e traduz um identificador */
-void ident()
-{
-    char name;
-    name = getName();
-
-    if (look == '(') {
-        match('(');
-        match(')');
-        emit("CALL %c", name);
-    } else
-        emit("MOV AX, [%c]", name);
-}
-
-/* analisa e traduz um comando de atribui√ß√£o */
-void assignment()
-{
-    char name;
-    name = getName();
-    match('=');
-    expression();
-    emit("MOV [%c], AX", name);
 }

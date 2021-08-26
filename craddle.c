@@ -29,6 +29,8 @@ void term();
 void expression();
 void add();
 void subtract();
+void factor();
+int isAddOp(char c);
 
 /* PROGRAMA PRINCIPAL */
 int main()
@@ -219,8 +221,11 @@ void subtract()
 
 /* reconhece e traduz uma expressão */
 void expression()
-{
-    term();
+{   
+    if(isAddOp(look))
+        emit("XOR AX, AX");
+    else
+        term();
     while(look == '+' || look == '-'){
         emit("PUSH AX");
         switch(look) {
@@ -235,4 +240,9 @@ void expression()
                 break;
         }
     }
+}
+
+int isAddOp(char c)
+{
+        return (c == '+' || c == '-');
 }

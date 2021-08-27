@@ -12,28 +12,18 @@ Este código é de livre distribuição e uso.
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include <string.g>
 
-char look; /* O caracter lido "antecipadamente" (lookahead) */
+#include "craddle.h"
 
-/* protótipos */
-void init();
-void nextChar();
-void error(char *fmt, ...);
-void fatal(char *fmt, ...);
-void expected(char *fmt, ...);
-void match(char c);
-char getName();
-char getNum();
-void emit(char *fmt, ...);
-int isAddOp(char c);
 
-/* PROGRAMA PRINCIPAL */
-int main()
-{
-    init();
+// /* PROGRAMA PRINCIPAL */
+// int main()
+// {
+//     init();
 
-    return 0;
-}
+//     return 0;
+// }
 
 /* inicialização do compilador */
 void init()
@@ -145,4 +135,11 @@ void emit(char *fmt, ...)
 int isAddOp(char c)
 {
     return (c == '+' || c == '-');
+}
+
+
+/* reconhece operador multiplicativo */
+int isMulOp(char c)
+{
+    return (c == '*' || c == '/');
 }

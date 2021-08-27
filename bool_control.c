@@ -69,6 +69,9 @@ void term();
 void add();
 void subtract();
 
+void newLine();
+void assignment();
+
 
 
 /* PROGRAMA PRINCIPAL */
@@ -241,6 +244,7 @@ void block(int exitLabel)
     follow = 0;
 
     while (!follow) {
+        newLine();
         switch (look) {
             case 'i':
                 doIf();
@@ -269,9 +273,10 @@ void block(int exitLabel)
                 follow = 1;
                 break;
             default:
-                other();
+                assignment();
                 break;
         }
+        newLine();
     }
 }
 
@@ -725,3 +730,20 @@ void subtract()
         emit("NEG AX");
 }
 
+/* reconhece uma linha em branco */
+void newLine()
+{
+        if (look == '\n')
+                nextChar();
+}
+
+/* analisa e traduz um comando de atribuição */
+void assignment()
+{
+        char name;
+
+        name = getName();
+        match('=');
+        boolExpression();
+        emit("MOV [%c], AX", name);
+}

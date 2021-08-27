@@ -27,6 +27,7 @@ char getName();
 char getNum();
 void emit(char *fmt, ...);
 int isAddOp(char c);
+
 int isBoolean(char c);
 int getBoolean();
 void boolTerm();

@@ -1,7 +1,7 @@
 all: init cgi clean
 
 init: library
-	gcc main.c -o main libTiny.a 
+	gcc main.c -o compilador libTiny.a 
 
 library: list tiny 
 	ar rcs libTiny.a lista.o asmCode.o errors.o input.o output.o parser.o scanner.o
@@ -14,8 +14,8 @@ tiny: controller/asmCode.c controller/asmCode.h view/errors.c view/errors.h mode
 
 clean:
 	clear
-	rm -rf *.o
+	rm -rf *.o *.a
 
 cgi:
-	cp main /usr/lib/cgi-bin/compilador
+	cp compilador /usr/lib/cgi-bin/compilador
 	

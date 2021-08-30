@@ -4,7 +4,7 @@
 int look; /* O caracter lido "antecipadamente" (lookahead) */
 char cur_class, cur_sign, cur_type;
 
-/* protótipos */
+/* protÃ³tipos */
 void init();
 void nextchar();
 void error(char *s);
@@ -69,7 +69,7 @@ void match(char c)
 	if (look == c)
 		nextchar();
 	else {
-		s[0] = c; /* uma conversao rápida (e feia) */
+		s[0] = c; /* uma conversao rï¿½pida (e feia) */
 		s[1] = '\0'; /* de um caracter em string */
 		expected(s);
 	}

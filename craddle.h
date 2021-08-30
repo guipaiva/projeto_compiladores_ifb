@@ -1,6 +1,14 @@
 #ifndef CRADDLE_H
 #define CRADDLE_H
 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <ctype.h>
+#include <string.h>
+
+
 char look;
 
 /* protótipos */
@@ -15,7 +23,8 @@ char getNum();
 void emit(char *fmt, ...);
 int isAddOp(char c);
 int isMulOp(char c);
-
+void skipWhite();
+void newLine();
 
 
 #endif

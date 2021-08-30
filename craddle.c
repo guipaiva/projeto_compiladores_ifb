@@ -8,12 +8,6 @@ série "Let's Build a Compiler".
 Este código é de livre distribuição e uso.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <ctype.h>
-#include <string.g>
-
 #include "craddle.h"
 
 
@@ -142,4 +136,18 @@ int isAddOp(char c)
 int isMulOp(char c)
 {
     return (c == '*' || c == '/');
+}
+
+/* captura um caracter de nova linha */
+void newLine()
+{
+    if (look == '\n')
+        nextChar();
+}
+
+/* pula caracteres de espaço */
+void skipWhite()
+{
+    while(look == ' ' || look == '\t')
+        nextChar();
 }
